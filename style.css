@@ -1,0 +1,266 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* BODY */
+body {
+  background-color: lavender;
+  color: #000;
+}
+
+/* ================= NAVBAR ================= */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: #fff;
+  padding: 20px 45px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 0 0 20px 22px;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+}
+
+nav ul li {
+  list-style: none;
+  margin-left: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+}
+
+nav ul li a:hover {
+  color: rgb(161, 166, 225);
+  font-size: 1.02rem;
+}
+
+/* LOGO / LEFT SECTION */
+.left,
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.left img {
+  height: 44px;
+  width: 40px;
+}
+
+.left h2 {
+  font-size: 23px;
+}
+
+.left span {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2b2b2b;
+}
+
+/* RIGHT LINKS */
+.right a {
+  margin-left: 7px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  position: relative;
+}
+
+/* UNDERLINE ANIMATION */
+.right a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: #6a5cff;
+  left: 0;
+  bottom: -6px;
+  transition: 0.3s;
+}
+
+.right a:hover::after {
+  width: 100%;
+}
+
+.right a:hover {
+  color: #6a5cff;
+}
+
+/* LOGIN BUTTON */
+#login-btn {
+  margin-left: 35px;
+  padding: 4px 22px;
+  background: linear-gradient(135deg, #7b5cff, #5a3cff);
+  color: #fff !important;
+  border-radius: 30px;
+  font-weight: 600;
+  box-shadow: 0 5px 15px rgba(106, 92, 255, 0.4);
+}
+
+#login-btn:hover {
+  background: linear-gradient(135deg, #5a3cff, #7b5cff);
+}
+
+/* ================= SECTIONS ================= */
+
+section,
+.second-section,
+.third-section,
+.fourth-section,
+.fifth-section {
+  display: flex;
+  justify-content: space-around;
+  font-size: 20px;
+  margin: 80px 0;
+}
+
+.main-section {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 20px;
+}
+
+/* IMAGES */
+.sec-img,
+.third-pic,
+.fourth-img,
+.fifth-img {
+  width: 400px;
+}
+
+/* TEXT COLORS */
+.color { color: blueviolet; }
+.yello { color: rgb(147, 147, 7); }
+.blue  { color: rgb(29, 29, 151); }
+.red   { color: rgb(195, 24, 24); }
+.green { color: green; }
+
+/* ================= BUTTONS ================= */
+
+.login-2 {
+  background-color: #e34432;
+  font-size: 15px;
+  font-family: fantasy;
+  border-radius: 7px;
+  padding: 5px 10px;
+  border: none;
+  color: lavender;
+  transition: 0.2s ease;
+  text-decoration: none;
+}
+
+.login-2:hover {
+  background-color: red;
+  font-size: 16px;
+}
+
+/* ================= FORMS ================= */
+
+form,
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form {
+  padding: 25px;
+  margin: 50px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.form-title {
+  margin: 10px 0;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 50px 20px;
+  background-color: black;
+  align-items: center;
+}
+
+.footer-1 {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 230px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgb(50, 50, 50);
+}
+
+.footer-sec {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.footer-heading {
+  color: #f2f2f2;
+  font-size: 17px;
+}
+
+.footer-text {
+  font-size: 12px;
+  color: rgb(149, 149, 149);
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.footer-text:hover {
+  color: white;
+}
+
+.footer-2 {
+  color: hsl(0, 0%, 55%);
+  padding: 10px 25px 0;
+  font-size: 11px;
+}
+
+/* ================= ABOUT / LOGIN ================= */
+
+#login {
+  background-color: lavender;
+}
+
+#About {
+  background-color: #fff;
+  color: black;
+}
+
+.heading-about {
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.content-about,
+.about-us-pic {
+  display: flex;
+  justify-content: center;
+}
