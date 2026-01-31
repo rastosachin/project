@@ -1,0 +1,47 @@
+body {
+  background-color: lavender;
+}
+#About {
+  background-color: lavender;
+  background-size: cover;
+  color: black;
+}
+.heading-about {
+  font-size: 25px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.content-about {
+  display: flex;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  padding: 24px 15px;
+}
+img {
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  justify-content: center;
+}
+
+.heading-about {
+  padding: 25px 25px 15px 15px;
+  font-size: 36px;
+}
+h1 {
+  font-size: 25px;
+  font-weight: bold;
+}
+br {
+  margin-top: 15px;
+}
+.content {
+  padding: 15px 15px;
+  line-height: 32px;
+  font-size: 20px;
+}
+.about-us-content {
+  padding: 15px 60px;
+}

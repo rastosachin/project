@@ -146,11 +146,21 @@ section,
 }
 
 /* TEXT COLORS */
-.color { color: blueviolet; }
-.yello { color: rgb(147, 147, 7); }
-.blue  { color: rgb(29, 29, 151); }
-.red   { color: rgb(195, 24, 24); }
-.green { color: green; }
+.color {
+  color: blueviolet;
+}
+.yello {
+  color: rgb(147, 147, 7);
+}
+.blue {
+  color: rgb(29, 29, 151);
+}
+.red {
+  color: rgb(195, 24, 24);
+}
+.green {
+  color: green;
+}
 
 /* ================= BUTTONS ================= */
 
