@@ -1,21 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="form-styles.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/form-styles.css">
+    <title>Smart Planner - Login</title>
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+        /* notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            max-width: 320px;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast.success { background: #2d7a4f; }
+        .toast.error   { background: #c0392b; }
 
-    <title>Login Page</title>
-    <link rel="shortcut icon" href="project logo.jpeg" type="image/x-icon">
+        .btn-loading {
+            opacity: 0.7;
+            cursor: not-allowed !important;
+            pointer-events: none;
+        }
+    </style>
 </head>
-
 <body>
     <nav>
       <div class="left">
         <a href="index.html">
-          <img src="project logo.png" class="logo" alt="logo" />
+          <img src="assets/logo.png" class="logo" alt="logo" />
         </a>
         <span>Smart Planner</span>
       </div>
@@ -23,28 +51,108 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="About-us.html">About Us</a></li>
-          <li><a href="login.html" id="login-btn">Start for Free</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="registration.html" id="login-btn">Start for Free</a></li>
         </ul>
       </div>
     </nav>
-    <form class="login-form" action="Login.php">
-        <h2 class="login-title">Login Now</h2>
-        <div class="input-group">
-            <input type="text" name="name" placeholder="Enter name" required>
-        </div>
-        <div class="input-group">
-            <input type="Email" name="email" placeholder="Enter email" required>
-        </div>
-        <div class="input-group">
-            <input type="Password" name="password" placeholder="Enter password" required>
-        </div>
-        <div class="input-group">
-            <button class="btn">Login</button>
-        </div>
-        <div class="register-now">
-            <span>Don't have an account? <a href="registration.html">Register Here</a></span>
-        </div>
-    </form>
-</body>
 
+    <!-- notification -->
+    <div id="toast" class="toast"></div>
+
+    <div class="form_cont" id="container">
+      <!-- login form -->
+      <div class="form-container sign-in">
+        <form id="login-form">
+            <h1>Sign In</h1>
+            <div class="social-icons">
+                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email address</span>
+            <input type="email" name="email" id="login-email" placeholder="Email" required>
+            <input type="password" name="password" id="login-password" placeholder="Password" required>
+            <a href="#">Forgot Your Password?</a>
+            <button type="submit" id="login-submit-btn">Sign In</button>
+        </form>
+      </div>
+
+      <!-- toggle login & register -->
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+              <h1>Welcome Back!</h1>
+              <p>Enter your personal details to use all of site features</p>
+              <button class="hidden" id="login">Sign In</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+              <h1>Hello, Friend!</h1>
+              <p>Register with your personal details to use all of site features</p>
+              <a href="registration.html" style="text-decoration:none;">
+                  <button class="hidden" id="register" style="pointer-events:none;">Sign Up</button>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        // no sign-up, redirect to registration.html)
+        const container = document.getElementById("container");
+        const loginBtn  = document.getElementById("login");
+
+        loginBtn.addEventListener("click", () => {
+            container.classList.remove("active");
+        });
+
+        function showToast(message, type = 'error') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
+        }
+
+        // login form submission
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn   = document.getElementById('login-submit-btn');
+            const email = document.getElementById('login-email').value.trim();
+            const pass  = document.getElementById('login-password').value;
+
+            btn.textContent = 'Signing in...';
+            btn.classList.add('btn-loading');
+
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('password', pass);
+
+            try {
+                const response = await fetch('php/login.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 800);
+                } else {
+                    showToast(data.message, 'error');
+                    btn.textContent = 'Sign In';
+                    btn.classList.remove('btn-loading');
+                }
+            } catch (err) {
+                showToast('Something went wrong. Is XAMPP running?', 'error');
+                btn.textContent = 'Sign In';
+                btn.classList.remove('btn-loading');
+            }
+        });
+    </script>
+</body>
 </html>

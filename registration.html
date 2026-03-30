@@ -3,51 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="form-styles.css">
-    <title>Registration Page</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/form-styles.css">
+    <title>Smart Planner - Register</title>
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            max-width: 320px;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: #2d7a4f; }
+        .toast.error   { background: #c0392b; }
+        .btn-loading { opacity: 0.7; cursor: not-allowed !important; pointer-events: none; }
+    </style>
 </head>
 <body>
     <nav>
-        <div class="left">
-          <a href="index.html">   <img src="project logo.jpeg" class="logo" alt="logo"> </img></a>
-            <span>Smart Study Planner</span>
-        </div>
-        <div class="right">
-            <ul>
-                <li><a href="index.html">HOME<a></li>
-                <li><a href="About-us.html">ABOUT US</a></li>
-                <li><a href="login.html" id="login-btn">LOGIN</a></li>
-            </ul>
-        </div>
-        </div>
+      <div class="left">
+        <a href="index.html">
+          <img src="assets/logo.png" class="logo" alt="logo" />
+        </a>
+        <span>Smart Planner</span>
+      </div>
+      <div class="right">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="About-us.html">About Us</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="registration.html" id="login-btn">Start for Free</a></li>
+        </ul>
+      </div>
     </nav>
-        <form method="POST" action="Login.php" class="login-form">
-        <h2 class="login-title">Register Now</h2>
-            <div class="input-group">
-                <input type="text" name="name" placeholder="Enter name" required>
+
+    <div id="toast" class="toast"></div>
+
+    <div class="form_cont" id="container">
+      <!-- register form -->
+      <div class="form-container sign-in">
+        <form id="register-form">
+            <h1>Create Account</h1>
+            <div class="social-icons">
+                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
             </div>
-            <div class="input-group">
-                <input type="text" name="address" placeholder="Enter address" required>
-            </div>
-            <div class="input-group">
-                <input type="text" name="class" placeholder="Enter class" required>
-            </div>
-            <div class="input-group">
-                <input type="Email" name="email" placeholder="Enter email" required>
-            </div>
-            <div class="input-group">
-                <input type="Password" name="password" placeholder="Enter password" required>
-            </div>
-            <div class="input-group">
-                <input type="Password" name="password" placeholder="Confirm password" required>
-            </div>
-            <div class="input-group">
-                <button class="btn">Register</button>
-            </div>
-            <!-- <div class="register-now">
-                <span>Already have an account? <a href="login.html">Login Here</a></span>
-            </div> -->
-</form>
+            <span>or use your email for registration</span>
+            <input type="text"     name="name"     id="reg-name"     placeholder="Full Name" required>
+            <input type="email"    name="email"    id="reg-email"    placeholder="Email" required>
+            <input type="password" name="password" id="reg-password" placeholder="Password (min 6 chars)" required>
+            <button type="submit" id="register-submit-btn">Sign Up</button>
+        </form>
+      </div>
+
+      <!-- toggle register & login -->
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1>Hello, Friend!</h1>
+            <p>Register with your personal details to use all of site features</p>
+            <button class="hidden" id="login">Sign Up</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <h1>Welcome Back!</h1>
+            <p>Enter your personal details to use all of site features</p>
+            <a href="login.html" style="text-decoration:none;">
+                <button class="hidden" id="register" style="pointer-events:none;">Sign In</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        const container   = document.getElementById("container");
+        const loginPanBtn = document.getElementById("login");
+
+        loginPanBtn.addEventListener("click", () => {
+            container.classList.remove("active");
+        });
+
+        function showToast(message, type = 'error') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
+        }
+
+        document.getElementById('register-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn      = document.getElementById('register-submit-btn');
+            const name     = document.getElementById('reg-name').value.trim();
+            const email    = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value;
+
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters.', 'error');
+                return;
+            }
+
+            btn.textContent = 'Creating account...';
+            btn.classList.add('btn-loading');
+
+            const formData = new FormData();
+            formData.append('name',     name);
+            formData.append('email',    email);
+            formData.append('password', password);
+
+            try {
+                const response = await fetch('php/register.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 800);
+                } else {
+                    showToast(data.message, 'error');
+                    btn.textContent = 'Sign Up';
+                    btn.classList.remove('btn-loading');
+                }
+            } catch (err) {
+                showToast('Something went wrong. Is XAMPP running?', 'error');
+                btn.textContent = 'Sign Up';
+                btn.classList.remove('btn-loading');
+            }
+        });
+    </script>
 </body>
 </html>
